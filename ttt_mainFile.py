@@ -105,7 +105,7 @@ def human_move(board, human):
     while move not in legal:
         move = ask_number("Jaki będzie Twój ruch? (0 - 8):", 0, NUM_SQUARES)
         if move not in legal:
-            print("\nTo pole jest już zajęte, niemądry Człowieku.  Wybierz inne.\n")
+            print("\nTo pole jest już zajęte. Wybierz inne.\n")
     print("Znakomicie...")
     return move
 
@@ -157,6 +157,13 @@ def congrat_winner(the_winner, computer, human):
         print(the_winner, "jest zwycięzcą!\n")
     else:
         print("Remis!\n")
+
+    if the_winner == computer:
+          print("Komputer wygrał!\n")
+
+    elif the_winner == human:
+        print("Gratulacje, wygrałeś!\n")
+       
 
 def main():
     display_instruct()
