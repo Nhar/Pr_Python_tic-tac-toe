@@ -25,3 +25,18 @@ def display_instruct():
     \n
     """
     )
+	
+def ask_yes_no(question):
+    """Zadaj pytanie, na które można odpowiedzieć tak lub nie."""
+    response = None
+    while response not in ("t", "n"):
+        response = input(question).lower()
+    return response
+
+
+def ask_number(question, low, high):
+    """Poproś o podanie liczby z odpowiedniego zakresu."""
+    response = None
+    while response not in range(low, high):
+        response = int(input(question))
+    return response
