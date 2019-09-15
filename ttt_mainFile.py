@@ -116,7 +116,7 @@ def computer_move(board, computer, human):
     board = board[:]
     # najlepsze pozycje do zajęcia według kolejności
     BEST_MOVES = (4, 0, 2, 6, 8, 1, 3, 5, 7)
-
+    SPECIAL_MOVES = (1,3,5,7)
     print("Wybieram pole numer", end=" ")
     
     # jeśli komputer może wygrać, wykonaj ten ruch
@@ -136,6 +136,14 @@ def computer_move(board, computer, human):
             return move
         # ten ruch został sprawdzony, wycofaj go
         board[move] = EMPTY
+
+    # Sprawdzenie wyjątków
+    if (human == (board[0] and board[8])) | (human == (board[2] and board[6])):
+        print("\nWyjątek nastąpił.\n")
+        for move in SPECIAL_MOVES:
+            if move in legal_moves(board):
+                print(move)
+                return move
 
     # ponieważ nikt nie może wygrać w następnym ruchu, wybierz najlepsze wolne pole
     for move in BEST_MOVES:
