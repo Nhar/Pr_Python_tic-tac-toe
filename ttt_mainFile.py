@@ -97,3 +97,56 @@ def winner(board):
         return TIE
 
     return None
+
+def human_move(board, human):
+    """Odczytaj ruch człowieka."""  
+    legal = legal_moves(board)
+    move = None
+    while move not in legal:
+        move = ask_number("Jaki będzie Twój ruch? (0 - 8):", 0, NUM_SQUARES)
+        if move not in legal:
+            print("\nTo pole jest już zajęte, niemądry Człowieku.  Wybierz inne.\n")
+    print("Znakomicie...")
+    return move
+
+
+def computer_move(board, computer, human):
+    """Spowoduj wykonanie ruchu przez komputer."""
+    # utwórz kopię roboczą, ponieważ funkcja będzie zmieniać listę
+    board = board[:]
+    # najlepsze pozycje do zajęcia według kolejności
+    BEST_MOVES = (4, 0, 2, 6, 8, 1, 3, 5, 7)
+
+    print("Wybieram pole numer", end=" ")
+    
+    # jeśli komputer może wygrać, wykonaj ten ruch
+    for move in legal_moves(board):
+        board[move] = computer
+        if winner(board) == computer:
+            print(move)
+            return move
+        # ten ruch został sprawdzony, wycofaj go
+        board[move] = EMPTY
+    
+    # jeśli człowiek może wygrać, zablokuj ten ruch
+    for move in legal_moves(board):
+        board[move] = human
+        if winner(board) == human:
+            print(move)
+            return move
+        # ten ruch został sprawdzony, wycofaj go
+        board[move] = EMPTY
+
+    # ponieważ nikt nie może wygrać w następnym ruchu, wybierz najlepsze wolne pole
+    for move in BEST_MOVES:
+        if move in legal_moves(board):
+            print(move)
+            return move
+
+
+def next_turn(turn):
+    """Zmień wykonawcę ruchu."""
+    if turn == X:
+        return O
+    else:
+        return X
